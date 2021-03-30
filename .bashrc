@@ -133,8 +133,19 @@ alias stat='git status'
 alias tag='git tag'
 alias newtag='git tag -a'
 
-#gconfig  per https://www.youtube.com/watch?v=tBoLDpTWVOM 
+# gconfig per "Git Bare Repository - A Better Way To Manage Dotfiles" @ https://www.youtube.com/watch?v=tBoLDpTWVOM 
+# don't forget to gconfig  --local status.showUntrackedFiles no
+#             and git remote add origin https://github.com/YOURUSERNAME/dotfiles.git
+# Usage:
+#        gconfig add /path/to/file
+#        gconfig commit -m "A short message"
+#        gconfig push
+# if you cloned this from https://github.com/johnaman/dotfiles then you want to use this line instead
+# alias gconfig='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
 alias gconfig='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# don't forget to 
 
 # Function definitions.
 # You may want to put all your additions into a separate file like
