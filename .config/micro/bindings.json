@@ -1,0 +1,5 @@
+{
+    "\u003cCtrl-o\u003e\u003cCtrl-h\u003e": "HSplit",
+    "Alt-/": "lua:comment.comment",
+    "CtrlUnderscore": "lua:comment.comment"
+}
