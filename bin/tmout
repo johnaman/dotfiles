@@ -1,0 +1,13 @@
+#/bin/bash
+
+#sleep for 1 minute or user specified no. of minutes -- concept from 
+#http://www.linuxquestions.org/questions/programming-9/bash-scripting-check-for-numeric-values-352226/
+if [ -z "$1" ];then
+  Tmr=60
+elif [[ $1 == ${1/[^0-9]//} ]];then
+  Tmr=$((60 * $1))
+else
+  Tmr=1
+fi
+echo sleeping for $Tmr seconds
+sleep $Tmr

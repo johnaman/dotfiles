@@ -1,0 +1,55 @@
+# last gist-paste at https://gist.github.com/ccba1cbfad6b9b3547201e23129b7e0a
+
+acs() { apt-cache search $@ | sort ; }
+acsg() { acs $1 | grep $2 ; }
+acsh() { apt-cache show $1 | less; dpkg -L $1 ; }
+agi() { sudo apt install $@ ; }
+agr() { sudo apt-get remove $@ ; }
+ags() { apt-get source $@ ; }
+bcat() { cat ~/bin/$1 ; }
+cxchroot() { sudo xchroot -u john $1 /bin/bash ; }
+dbx() { $HOME/opt/SQLiteStudio/sqlitestudio ; }
+depo() { apt-cache depends $@ ; }
+dl() { dpkg -L $@ ; }
+dlg() { dpkg -L $1 | grep $2 ; }
+duj() { sudo du --max-depth 1 -h $1 ; }
+envg() { env | grep -i $@ ; }
+egrep() { exec grep -E "$@" ; }
+ff() { nullout sh -c 'firefox -p default' $@ ; }
+fgrep() { exec grep -F "$@" ; }
+gman() { apropos -r $@ ; }
+hist() { cat ~/.bash_history | grep $1 ; }
+ispip() { pip list | grep $@ ; }
+ispkg() { dpkg -l "*$1*" | sort ; }
+lsd() { ls -lA $@ | grep ^dr | sort -k9 ; }
+lsdl() { ls -l --time-style=long-iso $@ | grep "^dr" | sort -k8 ; }
+lsl() { ls -lA $@ ; }
+lsm() { lsl $@ | more ; }
+lssize() { ls -lA $1 | sort -h -k5 ; }
+lst() { IFS=$'\n' ls -lAt --time-style=long-iso "$@" | sort -k6 -k7 -k8 ; }
+mpg() { mount -l | grep $1 ; }
+mp32wav() { mpg321 -b 10000 -s "$1" | sox -t raw -r 44100 -s -w -c2 - "$2" ; }
+mpg() { mount -l | grep $1 ; }
+# n_e_w_b() { nano ~/bin/$1; chmod +x ~/bin/$1 ; }  # now smarter in ~/bin
+# n_ullout() { $@ > /dev/null 2>&1 & ; } this won't fly as a macro so we still need it in ~/bin
+pipeman() { man $1 | col -b ; }
+pipp() { echo {$@} >> ~/pipinstalls.log; sudo pip3 install $@ ; }
+pkgfiles() { nullout x-www-browser https://packages.debian.org/buster/all/$1/filelist ; }
+pkgsearch() { nullout x-www-browser "https://packages.debian.org/search?searchon=contents&keywords=$1&mode=filename&suite=stable&arch=any" ; }
+psg() { ps -Af | grep -i $1 | grep -v grep ; }
+rdepo() { apt-cache rdepends $@ | grep -v $1 | grep -v Reverse | sort | uniq ; }
+remux() { ffmpeg -i $1 -i $2 -c copy -map 0:0? -map 1:1? -shortest remuxed.mp4 ; }
+rm_newlines() { tr '\n' ' ' < $@ ; }
+sn() { sudo nano $1 ; }
+squash_mount() { sudo mount -t squashfs $1 ~/squash -o loop ; }
+sub() { ~/sublime_text_3/sublime_text $@ ; }
+subt() { nullout /home/john/Serv1John/sublime/sublime_text $@ ; }
+vah() { vagrant help $1 ; }
+wv() { wordview $@ ; }
+ytd() { echo use ytdv for video download; echo file\(s\) saved at ~/Downloads/mps/.tmp; cd ~/Downloads; youtube-dl -x $1 ; }
+ytd1080() { youtube-dl -f 'bestvideo[height<=1080]+bestaudio' --hls-prefer-ffmpeg --merge-output-format 'mp4' $@ ; }
+ytdf() { youtube-dl -F $@ ; }
+ytdff() { youtube-dl -f $1 $2 ; }
+ytdh() { youtube-dl -h | less ; }	# help -- even though no params it stays here with his brothers
+ytdmpg() { youtube-dl -f 'bestvideo[height<=720]' --hls-prefer-ffmpeg --merge-output-format 'mp4' $@ ; }
+ytdv() { youtube-dl --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 $@ ; }

@@ -1,0 +1,28 @@
+echo "^C to break before changing root"
+read junk
+sudo mount -o bind /sys $1/sys
+sudo mount -t proc proc $1/proc
+sudo mount -o bind /dev $1/dev
+sudo cp -L /etc/resolv.conf $1/etc/resolv.conf
+#sudo mount --bind /var/lib/dbus $1/var/lib/dbus
+#sudo mount --bind /tmp $1/tmp
+#sudo mount --bind /dev/shm $1/dev/shm
+##sudo mount --bind /home $1/home
+##sudo mount --bind $XDG_RUNTIME_DIR $1$XDG_RUNTIME_DIR
+##sudo meld /etc/resolv.conf $1/etc/resolv.conf
+## some kind of read here to pause
+#sudo xchroot -u john $1 /bin/bash
+sudo chroot $1 /bin/bash
+
+echo unmounting the devices from the chroot directory ... >&2
+
+if [ -d $1 ]; then
+#    sudo umount $1/dev/shm
+#    sudo umount $1/var/lib/dbus
+#    sudo umount $1/tmp
+    sudo umount $1/proc
+    sudo umount $1/dev
+    sudo umount $1/sys
+#    sudo umount $1/home
+#    sudo umount $1$XDG_RUNTIME_DIR
+fi

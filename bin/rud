@@ -1,0 +1,4 @@
+sudo tlp setcharge 54 62 BAT0
+sudo tlp start
+sudo tlp stat
+sudo su -

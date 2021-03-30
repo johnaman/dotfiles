@@ -1,0 +1,13 @@
+# edit an existing program 
+if [ -f ~/bin/$1 ]; then
+   echo "In $HOME/bin/$1:"
+   less ~/bin/$1
+# is it an alias defined in .bashrc ?
+elif [ "" != "$(grep $1 ~/.bashrc)" ]; then 
+   echo "In $HOME/.bashrc:
+   $(grep -n $1 ~/.bashrc)"
+# is it a function defined in .bash_funcs ?
+elif [ "" != "$(grep $1 ~/.bash_funcs)" ]; then 
+   echo "In $HOME/.bash_funcs:
+   $(grep -n $1 ~/.bash_funcs)"
+fi

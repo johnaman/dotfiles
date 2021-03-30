@@ -1,0 +1,15 @@
+# For some things like k>olumn mode or on the fly macro editing, 80's q edit can't be beat!
+thepath=`realpath $1`
+cp $thepath ~/qbash.tmp
+dos83file="C:\\home\\john\\qbash.tmp"
+echo "q $dos83file" > ~/.dosemu/drive_c/qbat.bat
+dosemu qbat.bat
+read -r -p "Do you want to save the changes to $thepath? [y/N] " response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+   cp ~/qbash.tmp $thepath
+   rm qbash.tmp
+else
+   echo "Aborted. Nothing was changed."  # leave qbash.tmp behind just in case
+fi
+

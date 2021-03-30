@@ -1,0 +1,20 @@
+#/usr/bin/bash
+
+if [ -z "$1" ];then
+  Tmr=1
+elif [[ $1 == ${1/[^0-9]//} ]];then
+  Mins=$1
+  Tmr=$((60 * $1))
+else
+  echo "Usage: alarm <minutes to sleep>"
+  exit
+fi
+date
+echo sleeping for $Mins minutes
+sleep $Tmr
+date
+
+# xfce only
+notify-send "`date`" "Your Notification is Here!."
+vlc "/home/john/Music/Steely Dan-Can't  buy a thrill.opus"
+#rhythmbox ~/Music/THE\ MOODY\ BLUES\ --\ In\ Search\ of\ the\ Lost\ Chord\ --\ 1968.wmv.m4a > /dev/null 2>&1 &

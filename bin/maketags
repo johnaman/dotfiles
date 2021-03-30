@@ -1,0 +1,4 @@
+echo "Use this in top level directory to work with VS-Code"
+echo "Ctrl C to cancel"
+read
+ctags -R -f .tags

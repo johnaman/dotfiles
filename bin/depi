@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+#Reverse depends _Installed_
+# reverse depends of package name <remove spaces>
+depo $1 | grep Depends | awk '{print $2}' > /tmp/depi_1
+# All installed packages
+dpkg -l | awk '{print $2}' > /tmp/depi_2
+# intersection is the list of installed packeges which depend on $1
+sort /tmp/depi_1 /tmp/depi_2 | uniq -d

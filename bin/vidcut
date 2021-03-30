@@ -1,0 +1,9 @@
+#/home/john/bin/VidCutter-6.0.0-x64.AppImage
+#ln -s /home/john/Videos/tmpVidcutter/ /tmp/vidcutter/
+echo "WARNING DON'T FORGET TO SAVE PROJECTS Vidcutter fails to cut"
+echo use something like this instead
+echo "ffmpeg -i input.mp4 -ss 07:33.453 -to 00:08:25.472 -c:v copy -c:a copy Ex4.mp4"
+echo "see Videos/Work/BloodyHands/Extortion_20200306/Extortion.lst"
+nullout flatpak run --branch=stable --arch=x86_64  com.ozmartians.VidCutter
+
+#/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=vidcutter --file-forwarding com.ozmartians.VidCutter @@ %f @@

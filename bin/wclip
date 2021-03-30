@@ -1,0 +1,2 @@
+curl -F "sprunge=@$1" http://sprunge.us | xclip && xclip -o
+echo `xclip -o`, "@$1" >> sprunged

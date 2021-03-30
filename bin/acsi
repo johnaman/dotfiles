@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+# List Installed Packages which meet the apt-cache search criterion
+dpkg -l | awk '{ s = ""; for (i = 9; i <= NF; i++) s = s $i " "; print $2, s }' | grep $1 
+

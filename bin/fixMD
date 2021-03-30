@@ -1,0 +1,16 @@
+# Run this after installing https://addons.mozilla.org/en-US/firefox/addon/markdown-viewer-webext/
+#sudo mkdir -p /usr/local/share/mime/packages
+echo '******** Please copy and paste these lines into the editor:
+<?xml version="1.0"?>
+<mime-info xmlns=~http://www.freedesktop.org/standards/shared-mime-info~>
+  <mime-type type="text/plain">
+    <glob pattern="*.md"/>
+    <glob pattern="*.mkd"/>
+    <glob pattern="*.markdown"/>
+  </mime-type>
+</mime-info>
+*******    replacing "~" with single quote in <mime-info ...>
+******* Press enter to open nano editor'
+read
+sudo nano /usr/local/share/mime/packages/text-markdown.xml
+#sudo update-mime-database /usr/local/share/mime

@@ -1,0 +1,40 @@
+# edit an existing program 
+if [ -f ~/bin/$1 ]; then
+   nano ~/bin/$1
+   chmod +x ~/bin/$1
+# is it an alias defined in .bashrc ?
+elif [ "" != "$(grep $1 ~/.bashrc)" ]; then 
+   echo "$(grep $1 ~/.bashrc)"
+   read -r -p "Edit ~/.bashrc? [y/N] " response
+   if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+      line=`grep -n $1 ~/.bashrc`
+      echo "Goto line no.
+          $line"
+      read
+      nano ~/.bashrc
+      echo "Don't forget to 'gist-paste ~/.bashrc'
+      echo "either restart bash or"
+      echo ". ~/.bashrc"
+      fi
+# is it a function defined in .bash_funcs ?
+elif [ "" != "$(grep $1 ~/.bash_funcs)" ]; then 
+   echo "$(grep $1 ~/.bash_funcs)"
+   read -r -p "Edit ~/.bash_funcs? [y/N] " response
+   if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+      line=`grep -n $1 ~/.bash_funcs`
+      echo "Goto line no.
+          $line"
+      read
+      nano ~/.bash_funcs
+      echo "Don't forget to 'gist-paste ~/.bash_funcs'
+      echo "either restart bash or"
+      echo ". ~/.bash_funcs"
+   fi
+else
+# Create a new program
+   read -r -p "Create new file ~/bin/$1? [y/N] " response
+   if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+      nano ~/bin/$1
+      chmod +x ~/bin/$1
+   fi
+fi
