@@ -30,8 +30,8 @@ lst() { IFS=$'\n' ls -lAt --time-style=long-iso "$@" | sort -k6 -k7 -k8 ; }
 mpg() { mount -l | grep $1 ; }
 mp32wav() { mpg321 -b 10000 -s "$1" | sox -t raw -r 44100 -s -w -c2 - "$2" ; }
 mpg() { mount -l | grep $1 ; }
-# n_e_w_b() { nano ~/bin/$1; chmod +x ~/bin/$1 ; }  # now smarter in ~/bin
-# n_ullout() { $@ > /dev/null 2>&1 & ; } this won't fly as a macro so we still need it in ~/bin
+# n_e_w_b() { nano ~/bin/$1; chmod +x ~/bin/$1 ; }	# now smarter in ~/bin
+# n_ullout() { $@ > /dev/null 2>&1 & ; }		# this won't fly as a function so we still need it in ~/bin
 pipeman() { man $1 | col -b ; }
 pipp() { echo {$@} >> ~/pipinstalls.log; sudo pip3 install $@ ; }
 pkgfiles() { nullout x-www-browser https://packages.debian.org/buster/all/$1/filelist ; }
@@ -50,6 +50,6 @@ ytd() { echo use ytdv for video download; echo file\(s\) saved at ~/Downloads/mp
 ytd1080() { youtube-dl -f 'bestvideo[height<=1080]+bestaudio' --hls-prefer-ffmpeg --merge-output-format 'mp4' $@ ; }
 ytdf() { youtube-dl -F $@ ; }
 ytdff() { youtube-dl -f $1 $2 ; }
-ytdh() { youtube-dl -h | less ; }	# help -- even though no params it stays here with his brothers
+ytdh() { youtube-dl -h | less ; }			# help -- even though no params it stays here with his brothers
 ytdmpg() { youtube-dl -f 'bestvideo[height<=720]' --hls-prefer-ffmpeg --merge-output-format 'mp4' $@ ; }
 ytdv() { youtube-dl --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 $@ ; }

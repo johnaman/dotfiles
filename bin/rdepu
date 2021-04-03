@@ -1,9 +1,8 @@
 #!/usr/bin/bash
 #Reverse depends _NOT Installed_
-# reverse depends of package name <remove spaces>
-rdepo $1 | awk '{print $1}' > /tmp/rdepi_1
+# reverse depends of package name
+apt-cache rdepends $@ | grep -v $1 | grep -v Reverse | sort | uniq | awk '{print $1}' > /tmp/rdepi_1
 # All installed packages
 dpkg -l | awk '{print $2}' > /tmp/rdepi_2
 # intersection is the list of installed packeges which depend on $1
 sort /tmp/rdepi_1 /tmp/rdepi_2 | uniq -u
-

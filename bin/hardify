@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# words() is a sloppy tokenizer
+words() { printf ' %q ' "$@"; echo; }
+rm_newlines() { tr '\n' ' ' < $@ ; }
+
+# keywords culled from `compgen -k` 
+# if then else elif fi case esac for select while until do done in function time coproc
+# minimal command line debootstrap:
+# `ls -lA /opt/sidbase/bin | grep "^-rwx" | awk9 > minbash`
+# `rm_newlines minbash > minbash2`
+# bash bunzip2 bzcat bzdiff bzexe bzgrep bzip2 bzip2recover bzmore cat chgrp chmod chown cp dash date dd df dir dmesg echo egrep false fgrep findmnt grep gunzip gzexe gzip hostname ln login ls lsblk mkdir mknod mktemp more mountpoint mv pwd readlink rm rmdir run-parts sed sleep stty sync tar tempfile touch true uname uncompress vdir wdctl zcat zcmp zdiff zegrep zfgrep zforce zgrep zless zmore znew
+
+# empirical 'bad' words:
+# af arch ault branch check chroot ck conf default dep depo eq etc ext gist github http https id if it line lines lt mp3 my net newlines paste root search service size stat su sub sys text up us wav yt
+
+# consider all of the above as keywords:
+keywords=" if then else elif fi case esac for select while until do done in function time coproc bash bunzip2 bzcat bzdiff bzexe bzgrep bzip2 bzip2recover bzmore cat chgrp chmod chown cp dash date dd df dir dmesg echo egrep false fgrep findmnt grep gunzip gzexe gzip hostname ln login ls lsblk mkdir mknod mktemp more mountpoint mv pwd readlink rm rmdir run-parts sed sleep stty sync tar tempfile touch true uname uncompress vdir wdctl zcat zcmp zdiff zegrep zfgrep zforce zgrep zless zmore znew af arch ault branch check chroot ck conf default dep depo eq etc ext gist github http https id if it line lines lt mp3 my net newlines paste root search service size stat su sub sys text up us wav yt"
+echo "$keywords" > kwords
+
+# every working alias in .bashrc
+grep alias .bashrc | awk '{print $2}' | grep "=" | sort | awk '{sub(/=.*/,x)}1' > aliases
+jwords1=`rm_newlines aliases`
+echo "$jwords1" > aliases
+
+# every func name in .bash_funcs
+cat ~/.bash_funcs | awk '{sub(/\(.*/,x)}1' | sort > funcs
+jwords2=`rm_newlines funcs`
+echo "$jwords2" > funcs
+
+# everything that's a script in ~/bin
+for f in `ls ~/bin | sort`; do if ( file --mime bin/$f | grep -q "text\/") then echo "$f"; fi ; done > binscripts
+
+# 'tokenize' each file skipping comments and removing punctuation
+FS=`cat binscripts`; for f in $FS; do printf "$f: "; \
+	LINES=`cat ~/bin/$f | grep -v "^\#" | sed -e "s/[[:punct:]]\+/ /g"`; words $LINES ; done > bintoks
+
+#switching to python3 because sometimes bash sucks!
+
+py3process.py kwords aliases funcs bintoks
+rm kwords aliases funcs bintoks
+
+
+#sometimes bash sucks!
+exit
+
+
+#Tfile=`cat bintoks`
+#for t1 in $Tfile; do 
+while IFS='' read -r t1 || [ -n "${t1}" ]; do
+    f1=`echo "$t1" | awk '{print $1}'`
+    fname="$f1"
+    echo "$t1"
+#    tokens=`echo $t1 | awk '{ for (i =2; i<NF; i++) print $i }'`
+    processed="$f1"
+    for tok in $t1; do
+	    if [[ "$kwords" != *"$tok"* ]]  > /dev/null 2>&1; then     # skip keywords
+		if [[  $tok != ?(-)+([0-9]) ]] ; then     # skip numbers
+#	    	    echo "  $tok"
+		    processed+=" $tok"
+		    if [[ "$jwords1" == *"$tok"* ]]  > /dev/null 2>&1  ; then
+			echo "$fname: $tok is in .bashrc"
+		    fi
+		    if [[ "$jwords2" == *"$tok"* ]]  > /dev/null 2>&1  ; then
+			echo "$fname: $tok is in .bash_funcs"
+		    fi
+		fi
+	    fi
+    done
+    echo "Processed $processed"
+done < bintoks

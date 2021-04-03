@@ -117,7 +117,7 @@ alias sifa='hostname -I'					# formerly ( ip address show ) formerly ( sudo ifco
 alias systemservices='systemctl list-unit-files --state enabled'
 alias texta='cd ~/opt/textadept; textadept-curses'
 alias wos='head /etc/apt/sources.list -n3; uname -a'
-#alias waf=$HOME/waf/waf
+#a lias waf=$HOME/waf/waf
 
 # git
 alias addup='git add -u'
